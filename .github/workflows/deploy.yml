@@ -45,13 +45,13 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd /var/lib/tomcat9/webapps
-            rm -r -f ${{ steps.global_env.outputs.ARTIFACT_NAME }}
-            mkdir ${{ steps.global_env.outputs.ARTIFACT_NAME }}
-            cp target/${{ steps.global_env.outputs.ARTIFACT_NAME }}.war /var/lib/tomcat9/webapps/${{ steps.global_env.outputs.ARTIFACT_NAME }}
-            rm -r -f target
-            cd ${{ steps.global_env.outputs.ARTIFACT_NAME }}
-            unzip ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
-            rm ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
+            echo ${{ secrets.DEPLOY_PASSWORD }} | rm -r -f ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            echo ${{ secrets.DEPLOY_PASSWORD }} | mkdir ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            echo ${{ secrets.DEPLOY_PASSWORD }} | cp target/${{ steps.global_env.outputs.ARTIFACT_NAME }}.war /var/lib/tomcat9/webapps/${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            echo ${{ secrets.DEPLOY_PASSWORD }} | rm -r -f target
+            echo ${{ secrets.DEPLOY_PASSWORD }} | cd ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            echo ${{ secrets.DEPLOY_PASSWORD }} | unzip ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
+            echo ${{ secrets.DEPLOY_PASSWORD }} | rm ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
             
 #     Restart tomcat service
       - name: Restart tomcat service
