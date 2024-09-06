@@ -1,0 +1,65 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+
+#     Build JAR:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - name: Maven Package
+        run: mvn -B clean compile package -DskipTests
+        
+      - name: Set global env
+        id: global_env
+        run: |
+          echo "::set-output name=ARTIFACT_NAME::kztlibrary"
+          
+#     Upload artifact
+      - name: Upload artifact
+        uses: appleboy/scp-action@master
+        with:       
+          host: ${{ secrets.DEPLOY_IP }}        
+          username: ${{ secrets.DEPLOY_USER }}      
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: "target/${{ steps.global_env.outputs.ARTIFACT_NAME }}.war"      
+          target: "/var/lib/tomcat9/webapps/"
+
+#     Unarchive artifact
+      - name: Unarchive artifact
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_IP }}        
+          username: ${{ secrets.DEPLOY_USER }}      
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            cd /var/lib/tomcat9/webapps
+            rm -r -f ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            mkdir ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            cp target/${{ steps.global_env.outputs.ARTIFACT_NAME }}.war /var/lib/tomcat9/webapps/${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            rm -r -f target
+            cd ${{ steps.global_env.outputs.ARTIFACT_NAME }}
+            unzip ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
+            rm ${{ steps.global_env.outputs.ARTIFACT_NAME }}.war
+            
+#     Restart tomcat service
+      - name: Restart tomcat service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_IP }}        
+          username: ${{ secrets.DEPLOY_USER }}      
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S service tomcat9 restart
