@@ -15,7 +15,4 @@ object NewsRepository : BaseRepository<NewsEntity>() {
         }
     }
 
-
-
-
 }

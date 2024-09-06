@@ -3,7 +3,9 @@ package online.jutter.kztlibrary.net
 import online.jutter.kztlibrary.common.TokenManager
 import online.jutter.kztlibrary.common.ext.createWrapperResponse
 import online.jutter.kztlibrary.data.models.auth.LoginRequest
+import online.jutter.kztlibrary.data.models.auth.RegisterRequest
 import online.jutter.kztlibrary.domain.uscaseses.user.GetInfoUseCase
+import online.jutter.kztlibrary.domain.uscaseses.user.RegisterNewUserUseCase
 import online.jutter.kztlibrary.domain.uscaseses.user.UserLoginUseCase
 import org.springframework.web.bind.annotation.*
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*
 class AuthorisationController {
 
     private val userLoginUseCase = UserLoginUseCase()
+    private val registerNewUserUseCase = RegisterNewUserUseCase()
     private val getInfoUseCase = GetInfoUseCase()
 
     @RequestMapping(
@@ -25,6 +28,16 @@ class AuthorisationController {
         @RequestBody loginRequest: LoginRequest,
     ) = createWrapperResponse {
         userLoginUseCase(loginRequest.login!!)
+    }
+
+    @RequestMapping(
+        value = ["register"],
+        method = [RequestMethod.POST]
+    )
+    fun register(
+        @RequestBody registerRequest: RegisterRequest,
+    ) = createWrapperResponse {
+        registerNewUserUseCase(registerRequest)
     }
 
     @RequestMapping(

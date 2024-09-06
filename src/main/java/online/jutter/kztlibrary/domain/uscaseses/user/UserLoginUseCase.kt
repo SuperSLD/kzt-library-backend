@@ -10,9 +10,9 @@ class UserLoginUseCase {
     private val giveUserAchivmentUseCase = GiveUserAchivmentUseCase()
 
     operator fun invoke(login: String): LoginResponse {
-        val user = UsersRepository.getByLogin(login) ?: error("Пользователь не найден")
+        val user = UsersRepository.getByLogin(login) ?: return LoginResponse(null, false)
         val token = TokenManager.getToken(user)
         giveUserAchivmentUseCase("authorisation", user.id)
-        return LoginResponse(token)
+        return LoginResponse(token, true)
     }
 }

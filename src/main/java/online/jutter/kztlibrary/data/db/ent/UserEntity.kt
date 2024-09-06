@@ -18,7 +18,7 @@ class UserEntity {
     @Column(name = "user_midname")
     var midname: String = ""
     @Column(name = "company_role")
-    var companyRole: String = ""
+    var companyRole: String? = null
     var coins: Int = 0
-    val avatar: String = ""
+    var avatar: String? = null
 }
