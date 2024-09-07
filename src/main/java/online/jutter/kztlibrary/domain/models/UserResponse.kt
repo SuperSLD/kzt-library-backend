@@ -1,5 +1,7 @@
 package online.jutter.kztlibrary.domain.models
 
+import online.jutter.kztlibrary.domain.models.notification.NotificationResponse
+
 data class UserResponse(
     val id: String,
     val name: String,
@@ -9,4 +11,5 @@ data class UserResponse(
     val coins: Int,
     val avatar: String?,
     val achivements: List<AchivmentResponse>,
+    val notifications: List<NotificationResponse>,
 )

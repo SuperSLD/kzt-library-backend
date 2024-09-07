@@ -37,5 +37,7 @@
         <mapping class="online.jutter.kztlibrary.data.db.ent.UserChecklistItemEntity"/>
         <mapping class="online.jutter.kztlibrary.data.db.ent.UserFinishedLessonEntity"/>
 
+        <mapping class="online.jutter.kztlibrary.data.db.ent.NotificationEntity"/>
+
     </session-factory>
 </hibernate-configuration>
