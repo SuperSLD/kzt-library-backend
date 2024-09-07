@@ -14,4 +14,5 @@ class BookEntity {
     var rating: Float = 0F
     var cover: String = ""
     var renewal: Boolean = false
+    var author: String = ""
 }

@@ -18,4 +18,5 @@ class UserBookEntity {
     var returnDate: String = ""
     @Column(name = "is_return")
     var isReturn: Boolean = false
+    var count: Int = 0
 }

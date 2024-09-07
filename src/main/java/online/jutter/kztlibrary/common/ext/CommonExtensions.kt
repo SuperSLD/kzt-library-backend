@@ -2,7 +2,9 @@ package online.jutter.kztlibrary.common.ext
 
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Получение дайджеста
@@ -36,4 +38,17 @@ fun getUUID(): String {
 
 fun <T> MutableList<T>.addNotNull(item: T?) {
     if (item != null) this.add(item)
+}
+
+fun String.toCalendar(): Calendar {
+    val cal = Calendar.getInstance()
+    val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+    cal.time = sdf.parse(this)
+    return cal
+}
+
+
+fun Calendar.toDateString(): String {
+    val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+    return sdf.format(this.time)
 }

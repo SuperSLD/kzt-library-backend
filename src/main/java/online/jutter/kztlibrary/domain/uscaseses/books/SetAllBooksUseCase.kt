@@ -16,6 +16,7 @@ class SetAllBooksUseCase {
                     description = book.description
                     rating = book.rating
                     cover = book.cover
+                    author = book.author
                 }
             }
         )
