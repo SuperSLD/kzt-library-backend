@@ -17,5 +17,7 @@ class SetAllNewsUseCase {
            this.title = news.title
            this.description = news.description
            this.image = news.image
+           this.type = news.type
+           this.date = news.date
        }
 }
