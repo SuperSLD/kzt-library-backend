@@ -35,7 +35,7 @@ object BooksRepository : BaseRepository<BookEntity>() {
         BookListResponse(
             myBook = userBooks,
             rec = rec,
-            new = new,
+            new = allBooks//new,
         )
     }
 

@@ -23,6 +23,7 @@ class RegisterNewUserUseCase {
             this.midname = registerRequest.midname
             this.avatar = registerRequest.avatarUrl
             this.coins = 125
+            this.companyRole = "Читатель"
         }
         UsersRepository.insert(userEntity)
         sendNotificationUseCase(

@@ -42,5 +42,7 @@
         <mapping class="online.jutter.kztlibrary.data.db.ent.BookEntity"/>
         <mapping class="online.jutter.kztlibrary.data.db.ent.UserBookEntity"/>
 
+        <mapping class="online.jutter.kztlibrary.data.db.ent.SectionEntity"/>
+
     </session-factory>
 </hibernate-configuration>
